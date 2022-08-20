@@ -1,16 +1,7 @@
-# hacker_news_app
+# Hacker news application
 
-A new Flutter project.
+A new Flutter project including mobile and desktop support.
 
-## Getting Started
+## Overview
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This project uses Hacker news API (https://github.com/HackerNews/API) to display recent, best and top stories (sort by dropdown menu). By clicking "add to favorite" you can save the article for later viewing. When pressing on a story - new page with WebView will open and display content of the site in the application window.
