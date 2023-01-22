@@ -25,7 +25,7 @@ class StoryListViewItemCard extends StatelessWidget {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: () {
+            onTap: () async {
               StoryViewPageController storyViewPageController = StoryViewPageController(data);
               Navigator.push(context, MaterialPageRoute(builder: (context) => StoryViewPage(controller: storyViewPageController))).whenComplete(() {
                 onCompleteAction();

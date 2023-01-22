@@ -1,12 +1,14 @@
 import 'dart:collection';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:hacker_news_app/core/indicators/error_indicator.dart';
 import 'package:hacker_news_app/core/indicators/loading_indicator.dart';
 import 'package:hacker_news_app/pages/story_view/story_view_page_controller.dart';
 import 'package:hacker_news_app/pages/widgets/story_quick_view/cards/widgets/favorite_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_windows/webview_windows.dart' as webview_windows;
 
 class StoryViewPage extends StatefulWidget {
@@ -93,6 +95,24 @@ class _StoryViewPageState extends State<StoryViewPage> {
       return webview_windows.Webview(
         widget.controller.desktopWebViewController,
       );
+    } else if (Platform.isLinux) {
+      return Column(
+        children: [
+          const ErrorIndicator(errorMessage: 'Platform not supported.'),
+          TextButton(
+            onPressed: () async {
+              String url = widget.controller.data.url ?? '';
+              if (!await launchUrl(Uri.parse(url))) {
+                throw Exception('Could not launch $url');
+              }
+            },
+            child: const Text(
+              'Open in default application',
+              style: TextStyle(color: Colors.blue),
+            ),
+          ),
+        ],
+      );
     } else {
       return InAppWebView(
         key: widget.controller.webViewKey,
@@ -100,38 +120,12 @@ class _StoryViewPageState extends State<StoryViewPage> {
         initialUserScripts: UnmodifiableListView<UserScript>([]),
         onWebViewCreated: (controller) async {
           widget.controller.webViewController = controller;
-          print(await controller.getUrl());
+          if (kDebugMode) {
+            print(await controller.getUrl());
+          }
         },
         onPermissionRequest: (controller, request) async {
           return PermissionResponse(resources: request.resources, action: PermissionResponseAction.GRANT);
-        },
-        // onLoadStop: (controller, url) async {
-        //   pullToRefreshController?.endRefreshing();
-        //   setState(() {
-        //     this.url = url.toString();
-        //     urlController.text = this.url;
-        //   });
-        // },
-        // onReceivedError: (controller, request, error) {
-        //   pullToRefreshController?.endRefreshing();
-        // },
-        // onProgressChanged: (controller, progress) {
-        //   if (progress == 100) {
-        //     pullToRefreshController?.endRefreshing();
-        //   }
-        //   setState(() {
-        //     this.progress = progress / 100;
-        //     urlController.text = this.url;
-        //   });
-        // },
-        // onUpdateVisitedHistory: (controller, url, isReload) {
-        //   setState(() {
-        //     this.url = url.toString();
-        //     urlController.text = this.url;
-        //   });
-        // },
-        onConsoleMessage: (controller, consoleMessage) {
-          print(consoleMessage);
         },
       );
     }
