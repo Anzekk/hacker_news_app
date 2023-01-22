@@ -17,12 +17,13 @@ class _ErrorIndicatorState extends State<ErrorIndicator> with SingleTickerProvid
   Widget build(BuildContext context) {
     return Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Wrap(
               alignment: WrapAlignment.center,
-              // mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: [
                 Text('Seems like an error occurred', style: TextStyleHelper.big(), textAlign: TextAlign.center),
                 Padding(

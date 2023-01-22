@@ -72,7 +72,7 @@ class MainPageController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void fetchFavoritesList() async {
+  Future<void> fetchFavoritesList() async {
     favoriteStoryIdList = await StoryRepository.getAllFavorites().then((value) {
       return value.data ?? [];
     });

@@ -1,10 +1,19 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hacker_news_app/pages/main_page.dart';
 import 'package:hacker_news_app/pages/main_page_controller.dart';
 import 'package:hacker_news_app/util/color_helper.dart';
 
-void main() {
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+
+InAppLocalhostServer localhostServer = InAppLocalhostServer(documentRoot: 'assets');
+
+Future<void> main() async {
   MainPageController mainPageController = MainPageController();
+
+  if (!kIsWeb) {
+    await localhostServer.start();
+  }
   runApp(MyApp(
     mainPageController: mainPageController,
   ));

@@ -19,7 +19,7 @@ class StoryListViewItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      margin: const EdgeInsets.all(8.0),
+      margin: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
       child: Container(
         decoration: BoxDecoration(border: isFavorite ? Border.all(color: Colors.amber, width: 3) : null, borderRadius: BorderRadius.circular(15)),
         child: Material(
@@ -29,7 +29,6 @@ class StoryListViewItemCard extends StatelessWidget {
               StoryViewPageController storyViewPageController = StoryViewPageController(data);
               Navigator.push(context, MaterialPageRoute(builder: (context) => StoryViewPage(controller: storyViewPageController))).whenComplete(() {
                 onCompleteAction();
-                storyViewPageController.dispose();
               });
             },
             child: Padding(
@@ -40,7 +39,7 @@ class StoryListViewItemCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
-                      '${data.title}',
+                      data.title ?? '',
                       style: TextStyleHelper.big(
                         color: const Color(0xff1d2939),
                       ),

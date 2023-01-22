@@ -8,7 +8,7 @@ class StoryQuickViewWidgetController extends ChangeNotifier {
 
   StoryQuickViewWidgetController(this.story, this.favoriteStoryIdList);
 
-  refreshFavoriteStoryIdList() async {
+  Future<void> refreshFavoriteStoryIdList() async {
     favoriteStoryIdList = await StoryRepository.getAllFavorites().then((value) {
       return value.data ?? [];
     });

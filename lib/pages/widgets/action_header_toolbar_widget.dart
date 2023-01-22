@@ -10,42 +10,33 @@ class ActionHeaderToolbarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-      child: Row(
-        children: [
-          Text('Sort by: ', style: TextStyleHelper.body()),
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 4.0),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<StorySortEnum>(
-                borderRadius: BorderRadius.circular(15),
-                focusColor: Colors.transparent,
-                value: selectedValue,
-                items: [
-                  DropdownMenuItem(
-                    value: StorySortEnum.newStories,
-                    child: Text('New stories', style: TextStyleHelper.small()),
-                  ),
-                  DropdownMenuItem(
-                    value: StorySortEnum.topStories,
-                    child: Text('Top stories', style: TextStyleHelper.small()),
-                  ),
-                  DropdownMenuItem(
-                    value: StorySortEnum.bestStories,
-                    child: Text('Best stories', style: TextStyleHelper.small()),
-                  ),
-                ],
-                onChanged: onChangeValue,
-              ),
-            ),
-          )
-        ],
+    return DropdownButtonHideUnderline(
+      child: DropdownButton<StorySortEnum>(
+        borderRadius: BorderRadius.circular(15),
+        focusColor: Colors.transparent,
+        iconEnabledColor: Colors.white,
+        value: selectedValue,
+        selectedItemBuilder: (context) => getItemList(textStyle: const TextStyle(color: Colors.white)),
+        items: getItemList(),
+        onChanged: onChangeValue,
       ),
     );
+  }
+
+  List<DropdownMenuItem<StorySortEnum>> getItemList({TextStyle? textStyle}) {
+    return [
+      DropdownMenuItem(
+        value: StorySortEnum.newStories,
+        child: Text('New stories', style: textStyle),
+      ),
+      DropdownMenuItem(
+        value: StorySortEnum.topStories,
+        child: Text('Top stories', style: textStyle),
+      ),
+      DropdownMenuItem(
+        value: StorySortEnum.bestStories,
+        child: Text('Best stories', style: textStyle),
+      ),
+    ];
   }
 }
